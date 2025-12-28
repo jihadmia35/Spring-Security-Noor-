@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -32,6 +34,15 @@
 
     <button type="submit" value="Login">Login</button>
 </form>
+
+
+<div sec:authorize="isAnonymous()">
+    This block is for anonymous user
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    This block is for authenticated user
+</div>
 
 </body>
 </html>

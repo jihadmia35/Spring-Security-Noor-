@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -24,7 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
 //                        .requestMatchers("/login").permitAll()
                 .requestMatchers("/", "/profile").authenticated()
-                .requestMatchers("/forget", "/register").anonymous()
+                .requestMatchers("/forget", "/register", "/registration").anonymous()
                 .requestMatchers("/settings", "/payment", "/change-password").fullyAuthenticated()
                 .requestMatchers("/admin", "/admin-dashboard", "/admin/*", "/admin/**").hasAuthority("READ_INVOICE")
                 .requestMatchers("/images/*.png").permitAll()
@@ -65,4 +66,8 @@ public class SecurityConfig {
         return username -> User.withUsername(username).password(" ").build();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
