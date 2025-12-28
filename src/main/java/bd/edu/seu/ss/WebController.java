@@ -12,10 +12,16 @@ public class WebController {
         return "dashboard";
     }
 
-
     @GetMapping("/about-us")
     public String aboutus(){
 
         return "about";
     }
+
+    @GetMapping("/signin")
+    public String login() {
+        return "login"; // return login.html
+    }
+
+
 }

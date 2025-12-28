@@ -15,17 +15,18 @@ public class SecurityConfig {
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
         IO.println("Security Configured");
 
-        http.authorizeHttpRequests(request -> request
+        http
+                .authorizeHttpRequests(request -> request
+//                        .requestMatchers("/login").permitAll()
                 .requestMatchers("/", "/profile").authenticated()
+                .requestMatchers("/forget", "/register").anonymous()
                 .requestMatchers("/settings", "/payment", "/change-password").fullyAuthenticated()
                 .requestMatchers("/admin", "/admin/*", "/admin/**").denyAll()
                 .requestMatchers("/images/*.png").permitAll()
                 .requestMatchers("/contact-us","/about-us").permitAll()
                 .anyRequest().authenticated()
         )
-        .formLogin(Customizer.withDefaults())
-        .logout(Customizer.withDefaults())
-        .rememberMe(Customizer.withDefaults());
+        .formLogin(form -> form.loginPage("/signin").permitAll());
 
         return http.build();
     }
